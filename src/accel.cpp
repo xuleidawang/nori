@@ -30,6 +30,35 @@ void Accel::addMesh(Mesh *mesh) {
 
 void Accel::build() {
     /* Nothing to do here for now */
+    std::vector<uint32_t> triangleIndices;
+    for(uint32_t i=0; i < m_mesh->getTriangleCount(); i++)
+    {
+        triangleIndices[i] = i;
+    }
+    this.root = recursiveBuild(m_mesh->getBoundingBox(), triangleIndices);
+}
+
+OctreeNode* recursiveBuild(BoundingBox3f bbox, vector<uint32_t>& triangleIndices){
+    if (triangleIndices.size() < 1)
+        return nullptr;
+
+    if (triangleIndices.size() < 10){
+        OctreeNode* node = new OctreeNode(triangleIndices);
+    }
+
+    std::vector< <int, std::vector<uint32_t> > triangle_list(8, std::vector<uint32_t>());
+
+    for (every triangle) {
+        for (int i = 0; i < 8; ++i) {
+            if (triangle overlaps sub-node i)
+                add to list[i];
+        }
+    }
+
+    OctreeNode *node = new OctreeNode();
+    for (int i = 0; i < 8; ++i)
+        node.child[i] = recursiveBuild(bounding box of sub-node i, triangle_list[i]);
+    return node;
 }
 
 bool Accel::rayIntersect(const Ray3f &ray_, Intersection &its, bool shadowRay) const {

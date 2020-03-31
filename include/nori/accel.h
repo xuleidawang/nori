@@ -22,6 +22,26 @@
 
 NORI_NAMESPACE_BEGIN
 
+class OctreeNode {
+
+    OctreeNode(){
+        this.bbox = new BoundingBox3f();
+        children = {};
+        triangleIndices = {};
+    }
+
+    OctreeNode(std::vector<uint32_t> triangleIndices){
+        this.triangleIndices = triangleIndices;
+    }
+
+    //bounding box of current node
+    BoundingBox3f bbox;
+    OctreeNode* children[8];
+    std::vector<uint32_t> triangleIndices;
+    bool isLeaf;
+
+};
+
 /**
  * \brief Acceleration data structure for ray intersection queries
  *
@@ -40,6 +60,9 @@ public:
 
     /// Build the acceleration data structure (currently a no-op)
     void build();
+    
+    //
+    OctreeNode* recursiveBuild(BoundingBox3f bbox, vector<uint32_t>& triangleIndices);
 
     /// Return an axis-aligned box that bounds the scene
     const BoundingBox3f &getBoundingBox() const { return m_bbox; }
@@ -68,6 +91,7 @@ public:
 private:
     Mesh         *m_mesh = nullptr; ///< Mesh (only a single one for now)
     BoundingBox3f m_bbox;           ///< Bounding box of the entire scene
+    OctreeNode* root = nullptr;
 };
 
 NORI_NAMESPACE_END
