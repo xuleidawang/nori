@@ -23,15 +23,11 @@
 NORI_NAMESPACE_BEGIN
 
 class OctreeNode {
-
-    OctreeNode(){
-        this.bbox = new BoundingBox3f();
-        children = {};
-        triangleIndices = {};
-    }
+public:
+    OctreeNode(){}
 
     OctreeNode(std::vector<uint32_t> triangleIndices){
-        this.triangleIndices = triangleIndices;
+        this->triangleIndices = triangleIndices;
     }
 
     //bounding box of current node
@@ -39,7 +35,6 @@ class OctreeNode {
     OctreeNode* children[8];
     std::vector<uint32_t> triangleIndices;
     bool isLeaf;
-
 };
 
 /**
@@ -62,8 +57,9 @@ public:
     void build();
     
     //
-    OctreeNode* recursiveBuild(BoundingBox3f bbox, vector<uint32_t>& triangleIndices);
+    OctreeNode* recursiveBuild(BoundingBox3f bbox, std::vector<uint32_t>& triangleIndices);
 
+    const Mesh* getMesh()const {return m_mesh;}
     /// Return an axis-aligned box that bounds the scene
     const BoundingBox3f &getBoundingBox() const { return m_bbox; }
 

@@ -35,29 +35,62 @@ void Accel::build() {
     {
         triangleIndices[i] = i;
     }
-    this.root = recursiveBuild(m_mesh->getBoundingBox(), triangleIndices);
+    this->root = recursiveBuild(m_mesh->getBoundingBox(), triangleIndices);
 }
+/*
+Define order of sub-node bounding box.
+bottom layer
+| 3 | 2 |
+  -   -  
+| 0 | 1 |   
 
-OctreeNode* recursiveBuild(BoundingBox3f bbox, vector<uint32_t>& triangleIndices){
+top layer
+| 7 | 6 |
+  -   -  
+| 4 | 5 |   
+*/
+
+OctreeNode* Accel::recursiveBuild(BoundingBox3f bbox, std::vector<uint32_t>& triangleIndices){
     if (triangleIndices.size() < 1)
         return nullptr;
 
     if (triangleIndices.size() < 10){
         OctreeNode* node = new OctreeNode(triangleIndices);
+        return node;
     }
 
-    std::vector< <int, std::vector<uint32_t> > triangle_list(8, std::vector<uint32_t>());
+    BoundingBox3f box[8] = {bbox};
+    
+    for (int i=0 ; i < 8; i++)
+    {
+        box[i].min = 0.5*(bbox.getCorner(0) + bbox.getCorner(i));
+        box[i].max = 0.5*(bbox.getCorner(i) + bbox.getCorner(7));
+    }
 
-    for (every triangle) {
+    std::vector < std::vector<uint32_t> > triangle_list(8, std::vector<uint32_t>());
+    auto m_F = this->getMesh()->getIndices();
+    auto m_V = this->getMesh()->getVertexPositions();
+    for (uint32_t idx = 0; idx< triangleIndices.size(); idx++) {
         for (int i = 0; i < 8; ++i) {
-            if (triangle overlaps sub-node i)
-                add to list[i];
+            //if triangle bound overlap with sub-node bound
+            uint32_t i0 = m_F(0, idx), i1 = m_F(1, idx), i2 = m_F(2, idx);
+            const Point3f p0 = m_V.col(i0), p1 = m_V.col(i1), p2 = m_V.col(i2);
+            BoundingBox3f triangleBounds(p0);
+            triangleBounds.expandBy(p1);
+            triangleBounds.expandBy(p2);
+
+            if (box[i].overlaps(triangleBounds))
+            {
+                //add triangle to that list.
+                triangle_list[i].push_back(idx);
+            }
         }
     }
 
     OctreeNode *node = new OctreeNode();
+
     for (int i = 0; i < 8; ++i)
-        node.child[i] = recursiveBuild(bounding box of sub-node i, triangle_list[i]);
+        node->children[i] = recursiveBuild(box[i], triangle_list[i]);
     return node;
 }
 
