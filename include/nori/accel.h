@@ -57,7 +57,7 @@ public:
     void build();
     
     //
-    OctreeNode* recursiveBuild(BoundingBox3f bbox, std::vector<uint32_t>& triangleIndices);
+    OctreeNode* recursiveBuild(BoundingBox3f bbox, std::vector<uint32_t>& triangleIndices, int depth);
 
     const Mesh* getMesh()const {return m_mesh;}
     /// Return an axis-aligned box that bounds the scene
@@ -83,6 +83,7 @@ public:
      * \return \c true if an intersection was found
      */
     bool rayIntersect(const Ray3f &ray, Intersection &its, bool shadowRay) const;
+    bool rayIntersect(OctreeNode* node, const Ray3f &ray_, Intersection &its, bool shadowRay) const;
 
 private:
     Mesh         *m_mesh = nullptr; ///< Mesh (only a single one for now)
