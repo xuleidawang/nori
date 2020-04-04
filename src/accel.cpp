@@ -21,12 +21,12 @@
 
 NORI_NAMESPACE_BEGIN
 
-bool Accel::rayIntersect(OctreeNode* node, const Ray3f &ray_, Intersection &its, bool shadowRay) const{
+bool Accel::rayIntersect(OcTreeNode* node, const Ray3f &ray_, Intersection &its, bool shadowRay) const{
     if(!node) return false;
     bool foundIntersection = false;
     uint32_t f = -1;
-    Ray3f ray(ray_); /// Make a copy of the ray (we will need to update its '.maxt' value)
 
+    Ray3f ray(ray_); /// Make a copy of the ray (we will need to update its '.maxt' value)
     //Ray doesn't hit the bounding box, reject
     if(!node->bbox.rayIntersect(ray))
         return false;
@@ -34,40 +34,50 @@ bool Accel::rayIntersect(OctreeNode* node, const Ray3f &ray_, Intersection &its,
     //Interior node
     if(node->triangleIndices.size() < 1)
     {
-        float tmin = std::numeric_limits<float>::max();
+        std::vector<std::pair<float, int> > boundsHitDistance;
         for(int i=0; i< 8; i++)
         {
-            Intersection its_;
-            if (rayIntersect(node->children[i], ray, its_, shadowRay) && its_.t < tmin)
+            Ray3f ray(ray_);
+            float nearT, farT;
+            // Create child node bound index and  hit distance pair
+            if( node->children[i] && node->children[i]->bbox.rayIntersect(ray, nearT, farT))
             {
-                tmin = its_.t;
-                its = its_;
+                boundsHitDistance.push_back(std::make_pair(nearT, i));
             }
+            
         }
-        return its.mesh!=nullptr;
+        //sort to traverse the nodes from near to far
+        sort(boundsHitDistance.begin(), boundsHitDistance.end());
+
+        for(auto p: boundsHitDistance)
+        {
+            Ray3f ray(ray_); 
+            Intersection its_;
+            if (rayIntersect(node->children[p.second], ray, its_, shadowRay))
+            {
+                its = its_;
+                return true;
+            } 
+        }
+        return false;
     }
     //It is a leaf node
     else
     {
-        float u, v, t;
-        float tmin= std::numeric_limits<int>::max();
         const Mesh* m = this->getMesh();
-
-        for(int i=0;i < node->triangleIndices.size(); i++)
-        {
+        Ray3f ray(ray_); /// Make a copy of the ray (we will need to update its '.maxt' value)
+        for(uint32_t i=0;i < node->triangleIndices.size(); i++)
+        {    
+            float u, v, t;
             if(m->rayIntersect(node->triangleIndices[i], ray, u, v, t))
             {
-                if(shadowRay)
-                    return true;
-                if( t< tmin )
-                {
-                    tmin = t;
-                    ray.maxt = its.t = t;
-                    its.uv = Point2f(u, v);
-                    its.mesh = m_mesh;
-                    f = node->triangleIndices[i];
-                    foundIntersection = true;
-                }
+                if(shadowRay) return true;
+
+                ray.maxt = its.t = t;
+                its.uv = Point2f(u, v);
+                its.mesh = m_mesh;
+                f = node->triangleIndices[i];
+                foundIntersection = true;
             }
         }
 
@@ -134,57 +144,52 @@ void Accel::build() {
         triangleIndices.push_back(i);
     }
     this->root = recursiveBuild(m_mesh->getBoundingBox(), triangleIndices, 0);
-    std::cout<<"Octree Build Complete";
+    std::cout<<"OcTree Build Complete";
 }
 /*
 Define order of sub-node bounding box.
 bottom layer
-| 3 | 2 |
+| 2 | 3 |
   -   -  
 | 0 | 1 |   
 
 top layer
-| 7 | 6 |
+| 6 | 7 |
   -   -  
 | 4 | 5 |   
 */
 
-OctreeNode* Accel::recursiveBuild(BoundingBox3f bbox, std::vector<uint32_t>& triangleIndices, int depth){
+OcTreeNode* Accel::recursiveBuild(BoundingBox3f bbox, std::vector<uint32_t>& triangleIndices, int depth){
     if (triangleIndices.size() < 1)
         return nullptr;
 
     if (triangleIndices.size() < 10){
-        OctreeNode* node = new OctreeNode(triangleIndices);
+        OcTreeNode* node = new OcTreeNode(triangleIndices);
         return node;
     }
 
     if( depth > 20 ){
-        OctreeNode *node = new OctreeNode(triangleIndices);
+        OcTreeNode *node = new OcTreeNode(triangleIndices);
         return node;
     }
 
-    std::vector<BoundingBox3f> box(8,bbox);
+    BoundingBox3f box[8];
     
     //Calculate the 8 sub-nodes' bounding box
     for (int i=0 ; i < 8; i++)
     {
-        box[i].min = 0.5*(bbox.getCorner(0) + bbox.getCorner(i));
-        box[i].max = 0.5*(bbox.getCorner(i) + bbox.getCorner(7));
+        box[i] = BoundingBox3f(0.5*(bbox.getCorner(0) + bbox.getCorner(i)),
+            0.5*(bbox.getCorner(i) + bbox.getCorner(7)));
     }
 
     std::vector < std::vector<uint32_t> > triangle_list(8, std::vector<uint32_t>());
-    auto m_F = this->getMesh()->getIndices();
-    auto m_V = this->getMesh()->getVertexPositions();
+
     for (uint32_t idx = 0; idx< triangleIndices.size(); idx++) {
-        uint32_t i0 = m_F(0, idx), i1 = m_F(1, idx), i2 = m_F(2, idx);
-        const Point3f p0 = m_V.col(i0), p1 = m_V.col(i1), p2 = m_V.col(i2);
-        BoundingBox3f triangleBounds(p0);
-        triangleBounds.expandBy(p1);
-        triangleBounds.expandBy(p2);
+        BoundingBox3f triangleBounds = this->getMesh()->getBoundingBox(idx);
 
         for (int i = 0; i < 8; ++i) {
             //if triangle bound overlap with sub-node bound
-            if (box[i].overlaps(triangleBounds))
+            if (box[i].overlaps(triangleBounds) || i==7)
             {
                 //add triangle to that list.
                 triangle_list[i].push_back(idx);
@@ -192,10 +197,12 @@ OctreeNode* Accel::recursiveBuild(BoundingBox3f bbox, std::vector<uint32_t>& tri
         }
     }
 
-    OctreeNode *node = new OctreeNode();
+    OcTreeNode *node = new OcTreeNode();
 
     for (int i = 0; i < 8; ++i)
+    {
         node->children[i] = recursiveBuild(box[i], triangle_list[i], depth +1);
+    }
     return node;
 }
 

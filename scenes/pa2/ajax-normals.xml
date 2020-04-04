@@ -1,7 +1,7 @@
 <scene>
 	<!-- Independent sample generator, 32 samples per pixel -->
 	<sampler type="independent">
-		<integer name="sampleCount" value="32"/>
+		<integer name="sampleCount" value="1"/>
 	</sampler>
 
     <!-- Render the visible surface normals -->
@@ -27,7 +27,9 @@
 		<float name="fov" value="30"/>
 
 		<!-- 768 x 768 pixels -->
-		<integer name="width" value="768"/>
-		<integer name="height" value="768"/>
+<!-- 		<integer name="width" value="768"/>
+		<integer name="height" value="768"/> -->
+		<integer name="width" value="400"/>
+		<integer name="height" value="400"/>
 	</camera>
 </scene>

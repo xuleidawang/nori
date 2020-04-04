@@ -22,19 +22,19 @@
 
 NORI_NAMESPACE_BEGIN
 
-class OctreeNode {
+class OcTreeNode {
 public:
-    OctreeNode(){}
+    OcTreeNode(){
+    }
 
-    OctreeNode(std::vector<uint32_t> triangleIndices){
+    OcTreeNode(std::vector<uint32_t> triangleIndices){
         this->triangleIndices = triangleIndices;
     }
 
     //bounding box of current node
     BoundingBox3f bbox;
-    OctreeNode* children[8];
+    OcTreeNode* children[8];
     std::vector<uint32_t> triangleIndices;
-    bool isLeaf;
 };
 
 /**
@@ -57,7 +57,7 @@ public:
     void build();
     
     //
-    OctreeNode* recursiveBuild(BoundingBox3f bbox, std::vector<uint32_t>& triangleIndices, int depth);
+    OcTreeNode* recursiveBuild(BoundingBox3f bbox, std::vector<uint32_t>& triangleIndices, int depth);
 
     const Mesh* getMesh()const {return m_mesh;}
     /// Return an axis-aligned box that bounds the scene
@@ -83,12 +83,12 @@ public:
      * \return \c true if an intersection was found
      */
     bool rayIntersect(const Ray3f &ray, Intersection &its, bool shadowRay) const;
-    bool rayIntersect(OctreeNode* node, const Ray3f &ray_, Intersection &its, bool shadowRay) const;
+    bool rayIntersect(OcTreeNode* node, const Ray3f &ray_, Intersection &its, bool shadowRay) const;
 
 private:
     Mesh         *m_mesh = nullptr; ///< Mesh (only a single one for now)
     BoundingBox3f m_bbox;           ///< Bounding box of the entire scene
-    OctreeNode* root = nullptr;
+    OcTreeNode* root = nullptr;
 };
 
 NORI_NAMESPACE_END
