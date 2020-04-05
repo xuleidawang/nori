@@ -2,27 +2,27 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="nori" targetName="pugixml" />
       <config projectName="nori" targetName="Imath" />
       <config projectName="nori" targetName="nanogui" />
-      <config projectName="nori" targetName="glfw" />
       <config projectName="nori" targetName="nanogui-obj" />
       <config projectName="nori" targetName="IlmImf-obj" />
       <config projectName="nori" targetName="Iex" />
-      <config projectName="nori" targetName="tbb_def_files" />
+      <config projectName="nori" targetName="pugixml" />
       <config projectName="nori" targetName="tbb_static" />
+      <config projectName="nori" targetName="dwaLookups" />
       <config projectName="nori" targetName="IlmThread" />
       <config projectName="nori" targetName="warptest" />
       <config projectName="nori" targetName="b44ExpLogTable" />
       <config projectName="nori" targetName="toFloat" />
       <config projectName="nori" targetName="eLut" />
-      <config projectName="nori" targetName="dwaLookups" />
+      <config projectName="nori" targetName="glfw" />
+      <config projectName="nori" targetName="nori" />
       <config projectName="nori" targetName="IexMath" />
       <config projectName="nori" targetName="Half" />
       <config projectName="nori" targetName="IlmImf" />
       <config projectName="nori" targetName="glfw_objects" />
       <config projectName="nori" targetName="CopyIlmBaseLibs" />
-      <config projectName="nori" targetName="nori" />
+      <config projectName="nori" targetName="tbb_def_files" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -33,12 +33,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b2525073-53e4-410a-bc19-1bef4de0d987" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/nori" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/nori" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/nori/accel.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/nori/accel.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/pa1/bunny.exr" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/pa1/bunny.exr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/pa1/bunny.png" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/pa1/bunny.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/pa2/ajax-normals.xml" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/pa2/ajax-normals.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/accel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/accel.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,7 +46,7 @@
     <session id="1600986035">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.4" value="2" />
           <entry key="project.opened" value="2" />
         </counts>
@@ -62,7 +56,7 @@
           <entry key="Image" value="1" />
           <entry key="ObjectiveC" value="13" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="XML" value="1" />
+          <entry key="XML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -78,17 +72,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/accel.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="201" column="22" selection-start-line="201" selection-start-column="22" selection-end-line="201" selection-end-column="22" />
+            <state relative-caret-position="-700">
+              <caret line="60" column="9" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scenes/pa2/ajax-normals.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="3" lean-forward="true" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-214">
-              <caret line="105" column="43" lean-forward="true" selection-start-line="105" selection-start-column="43" selection-end-line="105" selection-end-column="43" />
+            <state relative-caret-position="300">
+              <caret line="124" selection-start-line="124" selection-end-line="124" />
               <folding>
                 <element signature="e#1106#2208#0" />
               </folding>
@@ -99,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/nori/bbox.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="348" selection-start-line="348" selection-end-line="348" />
+            <state relative-caret-position="202">
+              <caret line="370" selection-start-line="370" selection-end-line="370" />
             </state>
           </provider>
         </entry>
@@ -149,7 +152,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/nori/accel.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
+            <state relative-caret-position="840">
               <caret line="56" column="17" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
             </state>
           </provider>
@@ -191,7 +194,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -213,12 +215,19 @@
             <path>
               <item name="nori" type="b2602c69:ProjectViewProjectNode" />
               <item name="nori" type="462c0819:PsiDirectoryNode" />
+              <item name="scenes" type="462c0819:PsiDirectoryNode" />
+              <item name="pa2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nori" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nori" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -391,13 +400,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5189000" />
+    <option name="totallyTimeSpent" value="5210000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="98" y="23" width="1680" height="1027" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25274727" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25579977" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -478,32 +487,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/include/nori/accel.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
+        <state relative-caret-position="840">
           <caret line="56" column="17" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/nori/bbox.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="348" selection-start-line="348" selection-end-line="348" />
+        <state relative-caret-position="202">
+          <caret line="370" selection-start-line="370" selection-end-line="370" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/accel.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="201" column="22" selection-start-line="201" selection-start-column="22" selection-end-line="201" selection-end-column="22" />
+        <state relative-caret-position="-700">
+          <caret line="60" column="9" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-214">
-          <caret line="105" column="43" lean-forward="true" selection-start-line="105" selection-start-column="43" selection-end-line="105" selection-end-column="43" />
+        <state relative-caret-position="300">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
           <folding>
             <element signature="e#1106#2208#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scenes/pa2/ajax-normals.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="3" lean-forward="true" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
         </state>
       </provider>
     </entry>
